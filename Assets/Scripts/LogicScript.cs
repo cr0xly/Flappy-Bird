@@ -31,6 +31,9 @@ public class LogicScript : MonoBehaviour
     // function ends the current game and freezes time so the bird stops all movement 
     public void gameOver()
     {
+        if (gameOverScreen.activeSelf)  // prevent game over from executing multiple times
+            return;
+
         endOfGame.Play();               // end of game sound
         gameOverScreen.SetActive(true); // display the game over ui
         Time.timeScale = 0f;            // stops time so all movement ceases

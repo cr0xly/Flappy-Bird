@@ -37,8 +37,8 @@ public class BirdScript : MonoBehaviour
             wingsAnimator.Play("WingFlap", 0, 0f);
         }
 
-        // Check if bird is out of bounds
-        if (transform.position.y > outOfBounds || transform.position.y < -outOfBounds)
+        // Check if bird is not already dead and currently out of bounds every frame
+        if (birdIsAlive && (transform.position.y > outOfBounds || transform.position.y < -outOfBounds))
         {
             birdIsAlive = false;    // trigger
             logic.gameOver();       // ends game and pauses time

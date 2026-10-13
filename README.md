@@ -6,15 +6,17 @@ The objective is to keep the bird flying through gaps between randomly generated
 
 ## Screenshot
 
-<img src="Screenshots/gameplay.png" alt="Flappy Bird Gameplay" width="700">
+<img src="Screenshots/gameplay2.png" alt="Flappy Bird Gameplay" width="700">
 
 ## Gameplay
 
+- Click **PLAY** on the title screen to start the game.
 - Press **Space** to make the bird flap upward.
 - Avoid colliding with the pipes.
 - Keep the bird within the screen boundaries.
 - Earn points by successfully passing through pipes.
 - Try to survive as long as possible!
+- Click **Restart** after Game Over to try again.
 
 ## Features
 
@@ -35,14 +37,23 @@ The objective is to keep the bird flying through gaps between randomly generated
   - Animation plays when the player presses Space
   - Wings return to their resting position after each flap
   - Animation restarts with each Space press
+- Separate title screen with a PLAY button
+  - Uses Unity's SceneManager to load the main gameplay scene
+  - Matching background colours between scenes
+- Game Over handling prevents repeated death events
+  - Ensures the Game Over sound plays correctly
+  - Prevents Game Over logic from repeatedly executing
+  - Allows the game to restart correctly after collisions or leaving the screen
 
 ## About This Project
 
-This project was created to practice the fundamentals of 2D game development in Unity, including physics, collision detection, spawning objects, UI elements, animations and particle effects.
+This project was created to practice the fundamentals of 2D game development in Unity, including physics, collision detection, spawning objects, UI elements, animations, particle effects and scene management.
 
 The bird's movement is controlled through C#, while Unity's Animator handles the wing-flapping animation. The animation is triggered by the same Space key input that makes the bird jump, allowing the wings to flap in response to the player's actions rather than continuously.
 
-Additional enhancements are planned, including a **title screen**, **persistent high scores** and an **additional gameplay mechanic**.
+The game uses separate scenes for the title screen and gameplay. Unity's SceneManager handles switching between scenes and restarting the game.
+
+Additional enhancements are planned, including **persistent high scores** and an **additional gameplay mechanic**.
 
 ## Built With
 
