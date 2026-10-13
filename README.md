@@ -29,16 +29,23 @@ The objective is to keep the bird flying through gaps between randomly generated
   - Six different pixel-art cloud sprites
   - Randomized cloud sizes and spawning heights
   - Clouds continuously move across the background
-
-
+- Animated bird wings using Unity's Animation system
+  - Separate wing sprites for the up and down positions
+  - Wing sprites change position using animation keyframes
+  - Animation plays when the player presses Space
+  - Wings return to their resting position after each flap
+  - Animation restarts with each Space press
 
 ## About This Project
 
-Additional enhancements are planned, including **bird animations**, a **title screen**, **persistent high scores** and an **additional gameplay mechanic**.
+This project was created to practice the fundamentals of 2D game development in Unity, including physics, collision detection, spawning objects, UI elements, animations and particle effects.
+
+The bird's movement is controlled through C#, while Unity's Animator handles the wing-flapping animation. The animation is triggered by the same Space key input that makes the bird jump, allowing the wings to flap in response to the player's actions rather than continuously.
+
+Additional enhancements are planned, including a **title screen**, **persistent high scores** and an **additional gameplay mechanic**.
 
 ## Built With
 
 - Unity 6 (6000.2.6f2)
 - C#
 - Visual Studio
-

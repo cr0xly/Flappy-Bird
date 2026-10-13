@@ -11,10 +11,13 @@ public class BirdScript : MonoBehaviour
     public bool birdIsAlive = true;     // tracks if the bird is alive or not
     public AudioSource flap;            // reference to flap sound for space-bar
     public float outOfBounds = 13.5f;   // set Y boundary to end game when player reaches
+    public Animator wingsAnimator;      // reference to the wingFlap animation
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // disables the animation that automatically plays on startup
+        wingsAnimator.enabled = false;
         // fetches the Logic Script via Tag matching rather than direct relation
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
     }
@@ -29,6 +32,9 @@ public class BirdScript : MonoBehaviour
             flap.Play();
             // bird flap vertical movement
             myRigidBody2D.linearVelocity = Vector2.up * flapStrength;
+            // enable animator and restart the flap animation
+            wingsAnimator.enabled = true;
+            wingsAnimator.Play("WingFlap", 0, 0f);
         }
 
         // Check if bird is out of bounds
