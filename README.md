@@ -4,7 +4,7 @@ A Flappy Bird-style game created in Unity 6 as part of Lab 5 for COMP 2008 - Gam
 
 The objective is to keep the bird flying through gaps between randomly generated pipes without colliding with them. Each successful pass increases the player's score.
 
-The game also tracks the player's highest score, saving their personal best between game sessions.
+The game also tracks the player's highest score and remembers their selected bird colour between game sessions.
 
 ## Screenshot
 
@@ -12,6 +12,7 @@ The game also tracks the player's highest score, saving their personal best betw
 
 ## Gameplay
 
+- Use the left and right arrows on the title screen to select a bird colour.
 - Click **PLAY** on the title screen to start the game.
 - Press **Space** to make the bird flap upward.
 - Avoid colliding with the pipes.
@@ -67,7 +68,17 @@ The game also tracks the player's highest score, saving their personal best betw
 - Wing animation plays when the player presses Space
 - Wings return to their resting position after each flap
 - Animation restarts with each Space press
+- Each bird colour has its own matching wing animation
 - Flapping sound effect plays when the bird jumps
+
+### Bird Customization
+
+- Four selectable bird colours: Red, Blue, Green and Purple
+- Left and right arrow buttons cycle through the available colours
+- Title screen displays a preview of the selected bird and its colour name
+- Each colour has matching body sprites, resting wing sprites and animations
+- Uses arrays to manage the different sprites and animation states without creating separate bird prefabs
+- Saves the selected colour using `PlayerPrefs` so the choice persists between game sessions
 
 ### Background and Visual Effects
 
@@ -81,6 +92,8 @@ The game also tracks the player's highest score, saving their personal best betw
 ### Title Screen
 
 - Separate title screen with a PLAY button
+- Bird preview with left and right colour-selection buttons
+- Colour name updates to match the selected bird
 - Uses Unity's SceneManager to load the main gameplay scene
 - Game time is reset before loading the gameplay scene
 - UI created using Unity's Legacy UI components
@@ -118,6 +131,29 @@ This approach saves the player's score when the game ends rather than checking f
 
 The saved value persists between game sessions, allowing players to continue trying to beat their previous record.
 
+## How Bird Customization Works
+
+The title screen uses arrays to store the available bird sprites and their colour names.
+
+When the player clicks an arrow button, the selected array index changes and the preview updates to display the corresponding bird.
+
+The selection is saved using:
+
+```csharp
+PlayerPrefs.SetInt("SelectedBird", selectedBird);
+PlayerPrefs.Save();
+```
+
+When the gameplay scene loads, `BirdScript.cs` retrieves the saved selection:
+
+```csharp
+selectedBird = PlayerPrefs.GetInt("SelectedBird", 0);
+```
+
+The same index is used to select the bird's body sprite, resting wing sprite and wing-flapping animation.
+
+This allows all four colours to share the same Bird GameObject and movement logic.
+
 ## About This Project
 
 This project was created to practise the fundamentals of 2D game development in Unity, including physics, collision detection, spawning objects, UI elements, animations, particle effects, scene management and persistent data storage.
@@ -126,9 +162,7 @@ The bird's movement is controlled through C#, while Unity's Animator handles the
 
 The game uses separate scenes for the title screen and gameplay. Unity's SceneManager handles switching between scenes and restarting the game.
 
-The high-score system was added as an additional enhancement to practise saving and retrieving data using Unity's PlayerPrefs system.
-
-Further gameplay enhancements are planned.
+The high-score system and bird customization were added as additional enhancements to practise saving and retrieving data using Unity's PlayerPrefs system, working with arrays and controlling animations through C#.
 
 ## Built With
 

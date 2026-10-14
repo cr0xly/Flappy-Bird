@@ -1,17 +1,17 @@
 using UnityEngine;
 
 public class PipeMoveScript : MonoBehaviour
-{        
-    public float moveSpeed = 5f;    // How fast the pipes move to the left (in units per sec)
-    public float deadZone = -45;    // x position where pipes are considered offscreen and get destroyed
+{
+    public float moveSpeed = 5f;    // speed at which the pipes move left, in units per second
+    public float deadZone = -45f;   // X position beyond which pipes are destroyed
 
-    // Update is called once per frame
+    // Called once per frame to move pipes and check their position
     void Update()
     {
-        // move pipe left every frame at a constant speed
+        // Move the pipe pair left at a frame-rate-independent speed
         transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
 
-        // if the pipe moves past the deadZone, remove it from the scene
+        // Destroy the pipe pair once it passes the left-side boundary
         if (transform.position.x < deadZone)
             Destroy(gameObject);
     }

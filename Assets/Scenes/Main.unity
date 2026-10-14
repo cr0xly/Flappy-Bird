@@ -1377,6 +1377,16 @@ MonoBehaviour:
   flap: {fileID: 1805961508}
   outOfBounds: 13.5
   wingsAnimator: {fileID: 1717747133}
+  birdColors:
+  - {fileID: -5064401156898091283, guid: 8b10e27d920c573438b3c450b5c1c2e5, type: 3}
+  - {fileID: 7630795748896763674, guid: e81b324f3a0afe14589bee0e2378c6d0, type: 3}
+  - {fileID: -7817912675066442971, guid: 1cb49c04119afdd4eae67bfca55dbe58, type: 3}
+  - {fileID: -8805130995350963930, guid: 3142be03d9804aa4a9a3ac1a2188f77f, type: 3}
+  wingColors:
+  - {fileID: -136834512636766482, guid: 890d5abfdb5af064a896166acd7a71bd, type: 3}
+  - {fileID: -2584329648007314068, guid: 57ad51b06d7ce094999cee8c3bdf1668, type: 3}
+  - {fileID: -5414730245453178924, guid: b612c0cb1077d414c9ba3e24349f3bfe, type: 3}
+  - {fileID: -3112904634016455781, guid: c5151e16d80754f45a5c43c3a443e3ea, type: 3}
 --- !u!58 &1805961504
 CircleCollider2D:
   m_ObjectHideFlags: 0

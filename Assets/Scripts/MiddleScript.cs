@@ -2,20 +2,23 @@ using UnityEngine;
 
 public class MiddleScript : MonoBehaviour
 {
-    public LogicScript logic;   // reference to LogicScript that tracks score
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public LogicScript logic;   // reference to LogicScript for updating the player's score
+
+    // Called when the scoring trigger is initialized
     void Start()
     {
-        // find the object tagged "Logic" and get its LogicScript component
+        // Find the GameObject tagged "Logic" and retrieve its LogicScript component
         logic = GameObject.FindWithTag("Logic").GetComponent<LogicScript>();
     }
 
-    // adds to player's score when the bird collides
+    // Called when another 2D collider enters the scoring trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // trigger only if object is on layer 3
+        // Only award points when the colliding object belongs to physics layer 3
         if (collision.gameObject.layer == 3)
-            logic.addScore(1);   // increment the score by 1
+        {
+            // Award one point when the bird passes through the pipes
+            logic.addScore(1);
+        }
     }
 }

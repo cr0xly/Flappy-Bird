@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WingFlap
+  m_Name: WingFlapPurple
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -55,11 +55,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -136834512636766482, guid: 890d5abfdb5af064a896166acd7a71bd, type: 3}
+      value: {fileID: -3112904634016455781, guid: c5151e16d80754f45a5c43c3a443e3ea, type: 3}
     - time: 0.16666667
-      value: {fileID: -5130716630718567094, guid: 0626ce8036496e64db871f7e38a86173, type: 3}
+      value: {fileID: 7577283179529224983, guid: 159acd7c7e6f5524bac27bac79ca29b5, type: 3}
     - time: 0.33333334
-      value: {fileID: -136834512636766482, guid: 890d5abfdb5af064a896166acd7a71bd, type: 3}
+      value: {fileID: -3112904634016455781, guid: c5151e16d80754f45a5c43c3a443e3ea, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -91,9 +91,9 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -136834512636766482, guid: 890d5abfdb5af064a896166acd7a71bd, type: 3}
-    - {fileID: -5130716630718567094, guid: 0626ce8036496e64db871f7e38a86173, type: 3}
-    - {fileID: -136834512636766482, guid: 890d5abfdb5af064a896166acd7a71bd, type: 3}
+    - {fileID: -3112904634016455781, guid: c5151e16d80754f45a5c43c3a443e3ea, type: 3}
+    - {fileID: 7577283179529224983, guid: 159acd7c7e6f5524bac27bac79ca29b5, type: 3}
+    - {fileID: -3112904634016455781, guid: c5151e16d80754f45a5c43c3a443e3ea, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

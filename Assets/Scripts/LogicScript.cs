@@ -1,58 +1,75 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;  // allows scene loading and restarting
-using UnityEngine.UI;               // needed for using ui text
+using UnityEngine.SceneManagement;  // provides access to Unity's scene management functionality
+using UnityEngine.UI;               // provides access to UI components such as Text
 
 public class LogicScript : MonoBehaviour
 {
-    public int playerScore;             // keeps track of the player's score
-    public int highScore;               // keeps track of highest score in playerPrefs
-    public Text scoreText;              // reference to on-screen score display
-    public Text highScoreText;          // reference to on-screen high score text
-    public GameObject gameOverScreen;   // reference to game-over screen display
-    public AudioSource ding;            // reference to sound file for score increase
-    public AudioSource endOfGame;       // reference to sound file for game over screen
+    public int playerScore;             // tracks the player's current score
+    public int highScore;               // stores the highest score retrieved from PlayerPrefs
+    public Text scoreText;              // reference to the on-screen score display
+    public Text highScoreText;          // reference to the on-screen high score display
+    public GameObject gameOverScreen;   // reference to the game-over UI
+    public AudioSource ding;            // sound played when the player earns points
+    public AudioSource endOfGame;       // sound played when the game ends
 
-    // function loads the high score on start defaults to zero if none
+    // Called when the gameplay scene starts
     void Start()
     {
+        // Retrieve the saved high score, defaulting to zero if none exists
         highScore = PlayerPrefs.GetInt("HighScore", 0);
+
+        // Display the saved high score on the UI
         highScoreText.text = "Best: " + highScore.ToString();
     }
 
-    // function increases the score by a given amount
-    [ContextMenu("Increase Score")] // lets you test this in unity editor menu
+    // Increase the player's score by the specified amount
     public void addScore(int amount)
     {
+        // Play the scoring sound
         ding.Play();
-        playerScore += amount;                                  // add 1 to total score         
-        scoreText.text = "Score: " + playerScore.ToString();    // update the text on ui screen
+
+        // Add the specified amount to the player's score
+        playerScore += amount;
+
+        // Update the score displayed on the UI
+        scoreText.text = "Score: " + playerScore.ToString();
     }
 
-    // function restarts the game scene and resumes time
+    // Restart the current gameplay scene
     public void restartGame()
     {
-        // resumes time for the scene since gameOver() stops it
+        // Resume time because gameOver() pauses the game
         Time.timeScale = 1f;
-        // reloads the active scene by its current name
+
+        // Reload the currently active scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // function ends the current game and freezes time so the bird stops all movement 
+    // End the game, update the high score and display the game-over screen
     public void gameOver()
     {
-        if (gameOverScreen.activeSelf)  // prevent game over from executing multiple times
+        // Prevent game over from executing multiple times
+        if (gameOverScreen.activeSelf)
             return;
 
-        if (playerScore > highScore)    // high score logic. sets the playerpref to the highscore and saves
+        // Save a new high score if the player beats their previous record
+        if (playerScore > highScore)
         {
             highScore = playerScore;
+
+            // Update the high score displayed on the UI
             highScoreText.text = "Best: " + highScore.ToString();
+
+            // Store the new high score so it persists between game sessions
             PlayerPrefs.SetInt("HighScore", highScore);
             PlayerPrefs.Save();
         }
 
-        endOfGame.Play();               // end of game sound
-        gameOverScreen.SetActive(true); // display the game over ui
-        Time.timeScale = 0f;            // stops time so all movement ceases
-    }    
+        // Play the game-over sound and display the game-over UI
+        endOfGame.Play();
+        gameOverScreen.SetActive(true);
+
+        // Pause the game by stopping scaled time
+        Time.timeScale = 0f;
+    }
 }

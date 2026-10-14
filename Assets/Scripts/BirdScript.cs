@@ -1,55 +1,84 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class BirdScript : MonoBehaviour
-{    
-    public Rigidbody2D myRigidBody2D;   // controls bird physics and movement
-    public float flapStrength;          // how strong each flap pushed the bird upward
-    public LogicScript logic;           // reference to the LogicScript for scoring and game over
-    public bool birdIsAlive = true;     // tracks if the bird is alive or not
-    public AudioSource flap;            // reference to flap sound for space-bar
-    public float outOfBounds = 13.5f;   // set Y boundary to end game when player reaches
-    public Animator wingsAnimator;      // reference to the wingFlap animation
+{
+    public Rigidbody2D myRigidBody2D;           // reference to the bird's Rigidbody2D component
+    public float flapStrength;                  // upward velocity applied when the bird flaps
+    public LogicScript logic;                   // reference to LogicScript for handling game over
+    public bool birdIsAlive = true;             // tracks whether the bird is still alive
+    public AudioSource flap;                    // sound played when the bird flaps
+    public float outOfBounds = 13.5f;           // maximum positive or negative Y position before game over
+    public Animator wingsAnimator;              // controls the bird's wing-flapping animations
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private SpriteRenderer birdSpriteRenderer;  // displays the bird's body sprite
+    public Sprite[] birdColors;                 // body sprites for each available bird colour
+    private int selectedBird;                   // index used to select the body, wings and animation
+    private SpriteRenderer wingsSpriteRenderer; // displays the bird's wing sprite
+    public Sprite[] wingColors;                 // resting wing sprites matching each bird colour
+
+    // Animator state names corresponding to the indices in the sprite arrays
+    private string[] wingAnimations =
+    {
+        "WingFlapRed", "WingFlapBlue", "WingFlapGreen", "WingFlapPurple"
+    };
+
+    // Called when the gameplay scene starts
     void Start()
     {
-        // disables the animation that automatically plays on startup
+        // Disable the Animator so the wings remain stationary until the first flap
         wingsAnimator.enabled = false;
-        // fetches the Logic Script via Tag matching rather than direct relation
+
+        // Find the GameObject tagged "Logic" and retrieve its LogicScript component
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
+
+        // Retrieve the SpriteRenderer components for the bird's body and wings
+        birdSpriteRenderer = GetComponent<SpriteRenderer>();
+        wingsSpriteRenderer = wingsAnimator.GetComponent<SpriteRenderer>();
+
+        // Retrieve the selected bird colour from PlayerPrefs, defaulting to red
+        selectedBird = PlayerPrefs.GetInt("SelectedBird", 0);
+
+        // Apply the selected body sprite and matching resting wing sprite
+        birdSpriteRenderer.sprite = birdColors[selectedBird];
+        wingsSpriteRenderer.sprite = wingColors[selectedBird];
     }
 
-    // Update is called once per frame (60+ times per second)
+    // Called once per frame to check for player input and out-of-bounds movement
     void Update()
     {
-        // Check if the space key was just pressed down
-        if(Input.GetKeyDown(KeyCode.Space) == true && birdIsAlive)
+        // Allow the bird to flap when Space is pressed, provided it is still alive
+        if (Input.GetKeyDown(KeyCode.Space) == true && birdIsAlive)
         {
-            // play flap sound
+            // Play the flap sound
             flap.Play();
-            // bird flap vertical movement
+
+            // Set the bird's upward velocity to make it flap
             myRigidBody2D.linearVelocity = Vector2.up * flapStrength;
-            // enable animator and restart the flap animation
+
+            // Enable the Animator and restart the animation matching the selected bird
             wingsAnimator.enabled = true;
-            wingsAnimator.Play("WingFlap", 0, 0f);
+            wingsAnimator.Play(wingAnimations[selectedBird], 0, 0f);
         }
 
-        // Check if bird is not already dead and currently out of bounds every frame
+        // End the game if the living bird moves beyond the upper or lower Y boundary
         if (birdIsAlive && (transform.position.y > outOfBounds || transform.position.y < -outOfBounds))
         {
-            birdIsAlive = false;    // trigger
-            logic.gameOver();       // ends game and pauses time
+            // Prevent further flapping and repeated out-of-bounds deaths
+            birdIsAlive = false;
+
+            // Trigger the game-over sequence
+            logic.gameOver();
         }
     }
 
-    // function to end the game and pause time when the bird is hit or goes OOB
+    // Called when the bird collides with another non-trigger 2D collider
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // trigger the game over screen adn stop the bird from moving
-        birdIsAlive = false;
-        logic.gameOver();        
-    }    
+        // Only trigger game over if the bird is still alive
+        if (birdIsAlive)
+        {
+            birdIsAlive = false;
+            logic.gameOver();
+        }
+    }
 }

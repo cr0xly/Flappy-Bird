@@ -2,35 +2,45 @@ using UnityEngine;
 
 public class PipeSpawnScript : MonoBehaviour
 {
-    public GameObject pipe;         // reference to prefab of the pipe pair to be spawned
-    public float spawnRate = 3f;    // Time (in seconds) between pipe spawns
-    private float timer = 0f;       // Counts time since last pipe was created
-    public float heightOffset = 8;  // max vertical variation for pipe spawn
+    public GameObject pipe;         // reference to the pipe pair prefab to instantiate
+    public float spawnRate = 3f;    // time in seconds between pipe spawns
+    private float timer = 0f;       // tracks elapsed time between pipe spawns
+    public float heightOffset = 8;  // maximum vertical offset from the spawner's Y position
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Called when the pipe spawner starts
     void Start()
     {
-        SpawnPipe();    // Spawn the first pipe immedaitely
+        // Spawn the first pipe immediately
+        SpawnPipe();
     }
 
-    // Update is called once per frame
+    // Called once per frame to control the pipe spawning interval
     void Update()
     {
-        // Add the time passed since the last frame to the timer
+        // Accumulate elapsed time until the next pipe should spawn
         if (timer < spawnRate)
-            timer += Time.deltaTime;    //Time.dalteTime = seconds since last frame
+        {
+            // Time.deltaTime represents the time in seconds since the previous frame
+            timer += Time.deltaTime;
+        }
         else
         {
-            SpawnPipe();    // Create a new pipe
-            timer = 0f;     // Reset the timer
+            // Spawn another pipe once the interval has been reached
+            SpawnPipe();
+
+            // Reset the timer for the next spawn
+            timer = 0f;
         }
     }
 
-    // Creates a new pipe at random y value
+    // Instantiate a pipe pair at a randomly selected vertical position
     void SpawnPipe()
     {
-        float lowestPoint = transform.position.y - heightOffset;    // lowest possible spawn height
-        float highestPoint = transform.position.y + heightOffset;   // highest possible spawn height
+        // Calculate the minimum and maximum possible spawn heights
+        float lowestPoint = transform.position.y - heightOffset;
+        float highestPoint = transform.position.y + heightOffset;
+
+        // Create a pipe pair at the spawner's X position and a random Y position
         Instantiate(pipe, new Vector3(transform.position.x, Random.Range(lowestPoint, highestPoint), 0), transform.rotation);
     }
 }
